@@ -11,6 +11,9 @@
     font-family: system-ui, -apple-system, sans-serif;
     -webkit-font-smoothing: antialiased;
   }
+  ::selection {
+    @apply bg-sky-100 text-sky-900;
+  }
 }
 
 @layer components {
