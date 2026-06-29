@@ -29,12 +29,14 @@ export default function CategoriesPage() {
   const { data: categories, isLoading } = useCategories(true);
   const createMutation = useCreateCategory();
   const [showForm, setShowForm] = useState(false);
-  const [form, setForm] = useState({ name: '', description: '' });
+  const [form, setForm] = useState({ name: '', description: '', parentId: '' });
 
   const handleCreate = () => {
-    if (!form.name.trim()) return;
-    createMutation.mutate({ name: form.name, description: form.description || undefined },
-      { onSuccess: () => { setShowForm(false); setForm({ name: '', description: '' }); } });
+    if (!form.name.trim() || !form.parentId) return;
+    createMutation.mutate(
+      { name: form.name, description: form.description || undefined, parentId: form.parentId },
+      { onSuccess: () => { setShowForm(false); setForm({ name: '', description: '', parentId: '' }); } }
+    );
   };
 
   return (
@@ -48,9 +50,22 @@ export default function CategoriesPage() {
 
       {showForm && (
         <div className="mx-6 mt-4 card p-4 space-y-3 max-w-md">
-          <h3 className="font-semibold text-sm">New Category</h3>
+          <h3 className="font-semibold text-sm">New Sub-Category</h3>
+          <div>
+            <label className="label">Parent Category *</label>
+            <select
+              className="input"
+              value={form.parentId}
+              onChange={(e) => setForm(f => ({ ...f, parentId: e.target.value }))}
+            >
+              <option value="">Select parent...</option>
+              {categories?.map((c) => (
+                <option key={c.id} value={c.id}>{c.name}</option>
+              ))}
+            </select>
+          </div>
           <input
-            className="input" placeholder="Category name" value={form.name}
+            className="input" placeholder="Category name *" value={form.name}
             onChange={(e) => setForm(f => ({ ...f, name: e.target.value }))}
           />
           <input

@@ -131,7 +131,7 @@ export default function ProductForm({ product, onSubmit, isSubmitting }: Props) 
             <label className="label">Sale Price (VND)</label>
             <input
               type="number" className={`input ${errors.salePrice ? 'input-error' : ''}`}
-              {...register('salePrice', { valueAsNumber: true, setValueAs: (v) => v === '' ? undefined : Number(v) })} placeholder="Optional"
+              {...register('salePrice', { setValueAs: (v) => (v === '' || v == null || (typeof v === 'number' && isNaN(v))) ? undefined : Number(v) })} placeholder="Optional"
             />
             {errors.salePrice && <p className="text-red-500 text-xs mt-1">{errors.salePrice.message}</p>}
           </div>

@@ -12,8 +12,11 @@ export function useCategories(tree = true) {
 }
 
 export function useFlatCategories() {
-  const { data, ...rest } = useCategories(false);
-  return { data: data as Category[] | undefined, ...rest };
+  return useQuery({
+    queryKey: ['categories', 'leaf'],
+    queryFn: () => categoriesApi.getLeaf(),
+    staleTime: 10 * 60 * 1000,
+  });
 }
 
 export function useCreateCategory() {
