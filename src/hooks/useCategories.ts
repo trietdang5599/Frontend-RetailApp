@@ -1,7 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import toast from 'react-hot-toast';
 import { categoriesApi } from '../api/categories';
-import type { Category } from '../types';
+
 
 export function useCategories(tree = true) {
   return useQuery({
