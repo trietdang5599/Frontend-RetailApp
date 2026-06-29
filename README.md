@@ -1,32 +1,56 @@
-# React + TypeScript + Vite
+# Product Management — Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+React + TypeScript + Vite frontend for retail product management.
 
-Currently, two official plugins are available:
+## Live Demo
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+**Production URL:** https://frontend-retailapp.onrender.com
 
-## React Compiler
+> Hosted on Render (free tier — cold start ~30s after inactivity).
+> Connects to backend at https://backend-retailapp.onrender.com/api
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+---
 
-## Expanding the Oxlint configuration
+## Tech Stack
 
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
+- **React 18** + TypeScript
+- **Vite** — build tool
+- **TailwindCSS** — styling
+- **React Query** — server state & caching
+- **Zustand** — client state
+- **Axios** — HTTP client
+- **React Hot Toast** — notifications
 
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
+---
+
+## Run locally
+
+```bash
+npm install
+npm run dev
 ```
 
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+App will be available at `http://localhost:5173`. Requires the backend running at `http://localhost:5000`.
+
+### Environment
+
+| File | Used when |
+|------|-----------|
+| `.env` | Local dev (`npm run dev`) |
+| `.env.production` | Production build (`npm run build`) |
+
+```env
+# .env
+VITE_API_URL=http://localhost:5000/api
+
+# .env.production
+VITE_API_URL=https://backend-retailapp.onrender.com/api
+```
+
+---
+
+## Build for production
+
+```bash
+npm run build
+```
