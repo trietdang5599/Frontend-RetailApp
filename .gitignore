@@ -3,3 +3,8 @@ dist/
 .env.local
 .DS_Store
 *.log
+
+# Documentation
+document.md
+document_answers.md
+document_summary.md
