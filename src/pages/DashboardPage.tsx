@@ -1,16 +1,41 @@
-import { Package, Tag, TrendingUp, AlertTriangle } from 'lucide-react';
+import { Package, Tag, TrendingUp, AlertTriangle, Trash2 } from 'lucide-react';
+import { useState } from 'react';
+import toast from 'react-hot-toast';
 import { useProducts } from '../hooks/useProducts';
 import { useCategories } from '../hooks/useCategories';
 import { formatPrice } from '../utils/format';
+import { clearCache } from '../api/admin';
 
 export default function DashboardPage() {
   const { data: products } = useProducts({ page: 1, pageSize: 5, sortBy: 'createdAt', sortDesc: true });
   const { data: categories } = useCategories(false);
+  const [clearing, setClearing] = useState(false);
 
+  const handleClearCache = async () => {
+    setClearing(true);
+    try {
+      await clearCache();
+      toast.success('Cache cleared successfully');
+    } catch {
+      // error toast already handled by apiClient interceptor
+    } finally {
+      setClearing(false);
+    }
+  };
 
   return (
     <div className="p-6 space-y-6">
-      <h2 className="text-xl font-bold text-gray-900">Dashboard</h2>
+      <div className="flex items-center justify-between">
+        <h2 className="text-xl font-bold text-gray-900">Dashboard</h2>
+        <button
+          onClick={handleClearCache}
+          disabled={clearing}
+          className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-red-600 bg-red-50 border border-red-200 rounded-lg hover:bg-red-100 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+        >
+          <Trash2 size={15} />
+          {clearing ? 'Clearing…' : 'Clear Cache'}
+        </button>
+      </div>
 
       <div className="grid grid-cols-4 gap-4">
         {[
